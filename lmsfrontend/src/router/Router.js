@@ -17,6 +17,7 @@ import Enseignant from '../pages/enseignants/Enseignant';
 import Etudiant from '../pages/etudiants/Etudiant';
 import Dashboard from '../pages/Dashboard';
 import ListEns from '../pages/enseignants/ListEns';
+import CoursDetail from '../pages/cours/CoursDetail';
 
 const Router = () => {
 
@@ -28,9 +29,14 @@ const Router = () => {
                 <Routes>
                     <Route path="/" element={<Main />} >
                         <Route Index element={<Dashboard />} />
-                        <Route path="/addCours" element={<AddCours />} />
-                        <Route path="/Cours" element={<Cours />} />
-                        <Route path="/listCours" element={<ListCours />} />
+                        <Route path="/Cours" element={<Cours />} >
+
+                        <Route index element={<ListCours />} />
+                        <Route path="addCours" element={<AddCours />} />
+                        <Route path="coursDetail/:id" element={<CoursDetail />} />
+                                
+                        </Route>
+                       
                         <Route path="addEtusiant" element={<AddEtd />} />
                         <Route path="/etudiant" element={<Etudiant />} />
                         <Route path="/listEtudiant" element={<ListEtd />} />

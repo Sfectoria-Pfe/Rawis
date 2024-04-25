@@ -138,7 +138,7 @@ const Main = () => {
             { name: 'Dashboard', path: '/', icon: <MdDashboard /> },
             { name: 'Enseignants', path: '/listEnseignant', icon: <FaUserGroup /> },
             { name: 'Etudiants', path: '/listEtudiant', icon: <HiUserGroup /> },
-            { name: 'Cours', path: '/listCours', icon: <MdViewModule /> }].map((e, index) => (
+            { name: 'Cours', path: '/cours', icon: <MdViewModule /> }].map((e, index) => (
               <ListItem key={e.name} disablePadding sx={{ display: 'block' }}>
                 <ListItemButton onClick = {()=> navigate (e.path)}
                   sx={{
