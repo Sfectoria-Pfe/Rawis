@@ -9,10 +9,19 @@ async function main() {
 
   const cours1 = await prisma.cours.create({
     data: {
-      title: "What's new in Prisma? (Q1/22)",
+      title: "Spring boot",
+      description: "Spring boot"
+    },
+  });
+  const cours2 = await prisma.cours.create({
+    data: {
+      title: "Spring boot",
+      description: "Spring boot"
     },
   });
 }
+
+  
 
 // execute the main function
 main()

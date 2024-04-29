@@ -10,17 +10,18 @@ generator client {
 
 datasource db {
   provider = "mongodb"
-  url      = env("DATABASE_URL")
+  url      = "mongodb+srv://root:root@lms.zgifrdh.mongodb.net/eLearning"
 }
 
 model User {
-  
- id String @id @default(auto()) @map("_id") @db.ObjectId
+  id String @id @default(auto()) @map("_id") @db.ObjectId
 
-  nom String
-  prenom String
-  email String
+  nom      String
+  prenom   String
+  email    String @unique
   password String
+  phone    String
+  role     Role?
 
   //Relations 
   score        Score[]
@@ -29,19 +30,28 @@ model User {
   ReponseExr   ReponseExr[]
 }
 
+enum Role {
+  Etudiant
+  Enseignant
+  Admin
+}
+
 model Score {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
+  score Int
 
   //clés secondaires 
-  User      User    @relation(fields: [userId], references: [id])
-  userId    String @db.ObjectId
+
   Version   Version @relation(fields: [versionId], references: [id])
-  versionId String @db.ObjectId
+  versionId String  @db.ObjectId
+  User      User    @relation(fields: [userId], references: [id])
+  userId    String  @db.ObjectId
 }
 
 model Cours {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  title String 
+  id          String @id @default(uuid()) @map("_id")
+  title       String
+  description String
 
   //Relations 
   Chapitre     Chapitre[]
@@ -50,22 +60,24 @@ model Cours {
 }
 
 model Chapitre {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
+  title   String
+  link    String
   //clés secondaires
-  Cours   Cours @relation(fields: [coursId], references: [id])
-  coursId String @db.ObjectId
+  Cours   Cours  @relation(fields: [coursId], references: [id])
+  coursId String
 
   //Relations 
   Version Version[]
 }
 
 model Version {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
+  numberV Int
 
   //clés secondaires
   Chapitre   Chapitre @relation(fields: [chapitreId], references: [id])
-  chapitreId String @db.ObjectId
+  chapitreId String   @db.ObjectId
 
   //Relations 
   Quiz  Quiz[]
@@ -73,11 +85,11 @@ model Version {
 }
 
 model Quiz {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  question  String
   //clés secondaires
   Version   Version @relation(fields: [versionId], references: [id])
-  versionId String @db.ObjectId
+  versionId String  @db.ObjectId
 
   //Relations
   ReponseQ ReponseQ[]
@@ -85,25 +97,28 @@ model Quiz {
 }
 
 model ReponseQ {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
+  reponse Int
 
   //clés secondaires
   PropQcm   PropQcm @relation(fields: [propQcmId], references: [id])
-  propQcmId String @db.ObjectId
+  propQcmId String  @db.ObjectId
   User      User    @relation(fields: [userId], references: [id])
-  userId    String @db.ObjectId
+  userId    String  @db.ObjectId
   Quiz      Quiz    @relation(fields: [quizId], references: [id])
-  quizId    String @db.ObjectId
+  quizId    String  @db.ObjectId
 }
 
 model PropQcm {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  numP        Int
+  proposition String
 
   //Relations
   ReponseQ ReponseQ[]
 
   //clés secondaires
-  Quiz   Quiz @relation(fields: [quizId], references: [id])
+  Quiz   Quiz   @relation(fields: [quizId], references: [id])
   quizId String @db.ObjectId
 }
 
@@ -111,10 +126,10 @@ model Enseignement {
   id String @id @default(auto()) @map("_id") @db.ObjectId
 
   //clés secondaires
-  User    User  @relation(fields: [userId], references: [id])
+  User    User   @relation(fields: [userId], references: [id])
   userId  String @db.ObjectId
-  Cours   Cours @relation(fields: [coursId], references: [id])
-  coursId String @db.ObjectId
+  Cours   Cours  @relation(fields: [coursId], references: [id])
+  coursId String
 }
 
 model ReponseExr {
@@ -122,9 +137,9 @@ model ReponseExr {
 
   //clés secondaires
   User       User     @relation(fields: [userId], references: [id])
-  userId     String @db.ObjectId
+  userId     String   @db.ObjectId
   Exercice   Exercice @relation(fields: [exerciceId], references: [id])
-  exerciceId String @db.ObjectId
+  exerciceId String   @db.ObjectId
 }
 
 model Exercice {
@@ -132,13 +147,13 @@ model Exercice {
 
   //Relations
   ReponseExr ReponseExr[]
-  Cours      Cours       @relation(fields: [coursId], references: [id])
-  coursId    String @db.ObjectId 
+  Cours      Cours        @relation(fields: [coursId], references: [id])
+  coursId    String
 }
 
 model Contact {
   id String @id @default(auto()) @map("_id") @db.ObjectId
 
-  email String
+  email       String
   description String
 }

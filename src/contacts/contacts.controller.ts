@@ -22,16 +22,16 @@ export class ContactsController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.contactsService.findOne(+id);
+    return this.contactsService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateContactDto: UpdateContactDto) {
-    return this.contactsService.update(+id, updateContactDto);
+    return this.contactsService.update(id, updateContactDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.contactsService.remove(+id);
+    return this.contactsService.remove(id);
   }
 }
