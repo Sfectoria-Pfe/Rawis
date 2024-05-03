@@ -33,7 +33,7 @@ const AddCours = () => {
       event.stopPropagation();// bech may2atherch aala les balises lokhrin 
       setValidated(true) // ydhahharli les feedback
     } else {
-      const response = await axios.post("http://localhost:4000/cours", cours)
+     await axios.post("http://localhost:4000/cours", cours)
       navigate(-1)
     }
 
@@ -53,13 +53,21 @@ const AddCours = () => {
               onChange={handleChange}
               name='title'
             />
+                <Form.Label>Description</Form.Label>
+            <Form.Control
+              required
+              type="text"
+              placeholder="Description"
+              onChange={handleChange}
+              name='description'
+            />
             <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
           </Form.Group>
 
         </Row>
 
 
-        <Button type="submit">Submit form</Button>
+        <Button type="submit">Ajouter</Button>
       </Form>
     </div>
   )

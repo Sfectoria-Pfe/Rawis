@@ -5,8 +5,30 @@ import { useNavigate } from 'react-router-dom';
 import { GridActionsCellItem } from '@mui/x-data-grid';
 import DeleteIcon from '@mui/icons-material/Delete';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import Delete from '../../components/Delete';
 
 const ListCours = () => {
+
+  const [selectId, setSelectId] = useState('');
+  const [update, setUpdate] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleDelete = async () => {
+    try {
+      console.log(selectId)
+      await axios.delete(`http://localhost:4000/cours/${selectId}`)
+      setUpdate(!update)
+      handleClose()
+    } catch (error) {
+      console.log(error)
+    }
+  };
 
   const [rows, setRows] = useState([])
   const navigate=useNavigate()
@@ -14,6 +36,12 @@ const ListCours = () => {
     {
       field: 'title',
       headerName: 'Matière',
+      width: 150,
+      editable: true,
+    },
+    {
+      field: 'description',
+      headerName: 'Description',
       width: 150,
       editable: true,
     },
@@ -26,6 +54,9 @@ const ListCours = () => {
         getActions: (params) => [
           <GridActionsCellItem 
           icon={<DeleteIcon/>}
+          onClick={() =>{
+            setSelectId(params.row.id)
+            handleClickOpen ()}}
           />,
           <GridActionsCellItem 
           icon={<RemoveRedEyeIcon/>}
@@ -50,11 +81,12 @@ const ListCours = () => {
   useEffect(() => {
     fetchCours()
   }
-    , [])
+   , [update])//kol matetbadel update awed useEffect / depeendecy array
   return (
     <div>
+      <Delete open={open} handleClose={handleClose} handleDelete={handleDelete} />
       <div className='d-flex justify-content-end py-3'>
-        <button className='btn btn-primary' onClick={()=>navigate("addCours")}>Add cours</button>
+        <button className='btn btn-primary' onClick={()=>navigate("addCours")}>Ajouter cours</button>
       </div>
       <Liste columns={columns} rows={rows} />
     </div>

@@ -19,10 +19,14 @@ import { TfiMenuAlt } from "react-icons/tfi";
 import { MdDashboard, MdViewModule } from "react-icons/md";
 import { HiUserGroup } from "react-icons/hi2";
 import { FaUserGroup } from "react-icons/fa6";
-import {useNavigate, Outlet} from 'react-router-dom';
-
+import { useNavigate, Outlet } from 'react-router-dom';
+import { MDBContainer, MDBNavbar, MDBBtn, MDBInputGroup } from 'mdb-react-ui-kit';
+import { Avatar, Menu, MenuItem, Tooltip } from '@mui/material';
+import { MyContext } from '../router/Router';
 
 const drawerWidth = 240;
+
+const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const openedMixin = (theme) => ({
   width: drawerWidth,
@@ -93,6 +97,18 @@ const Main = () => {
 
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const user = React.useContext(MyContext)
+  console.log(user , 'user from main')
+
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
+
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
+  };
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -103,7 +119,7 @@ const Main = () => {
   };
 
   const navigate = useNavigate()
-  
+
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
@@ -122,8 +138,44 @@ const Main = () => {
             <TfiMenuAlt />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            Mini variant drawer
+            <MDBNavbar>
+              <MDBContainer fluid>
+                <MDBInputGroup tag="form" className='d-flex w-auto mb-3'>
+                  <input className='form-control' placeholder="Type query" aria-label="Search" type='Search' />
+                  <MDBBtn outline>Search</MDBBtn>
+                </MDBInputGroup>
+              </MDBContainer>
+            </MDBNavbar>
           </Typography>
+          <Box sx={{ flexGrow: 0 }}>
+            <Tooltip title="Open settings">
+              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                <Avatar alt="Remy Sharp" src="../img/lms" />
+              </IconButton>
+            </Tooltip>
+            <Menu
+              sx={{ mt: '45px' }}
+              id="menu-appbar"
+              anchorEl={anchorElUser}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={Boolean(anchorElUser)}
+              onClose={handleCloseUserMenu}
+            >
+              {settings.map((setting) => (
+                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center">{setting}</Typography>
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
@@ -135,31 +187,36 @@ const Main = () => {
         <Divider />
         <List>
           {[
-            { name: 'Dashboard', path: '/', icon: <MdDashboard /> },
-            { name: 'Enseignants', path: '/listEnseignant', icon: <FaUserGroup /> },
-            { name: 'Etudiants', path: '/listEtudiant', icon: <HiUserGroup /> },
-            { name: 'Cours', path: '/cours', icon: <MdViewModule /> }].map((e, index) => (
-              <ListItem key={e.name} disablePadding sx={{ display: 'block' }}>
-                <ListItemButton onClick = {()=> navigate (e.path)}
-                  sx={{
-                    minHeight: 48,
-                    justifyContent: open ? 'initial' : 'center',
-                    px: 2.5,
-                  }}
-                >
-                  <ListItemIcon
+            { name: 'Dashboard', path: '/', icon: <MdDashboard /> , roles: ['Admin','Enseignant'] },
+            { name: 'Enseignants', path: '/listEnseignant', icon: <FaUserGroup />, roles:['Admin'] },
+            { name: 'Etudiants', path: '/listEtudiant', icon: <HiUserGroup />, roles: ['Admin','Enseignant']  },
+            { name: 'Cours', path: '/cours', icon: <MdViewModule />,  roles: ['Admin','Enseignant','Etudiant'] }].map((e, index) => {
+              if (e.roles.includes(user.role)) {
+                return (
+                  <ListItem key={e.name} disablePadding sx={{ display: 'block' }}>
+                  <ListItemButton onClick={() => navigate(e.path)}
                     sx={{
-                      minWidth: 0,
-                      mr: open ? 3 : 'auto',
-                      justifyContent: 'center',
+                      minHeight: 48,
+                      justifyContent: open ? 'initial' : 'center',
+                      px: 2.5,
                     }}
                   >
-                    {e.icon}
-                  </ListItemIcon>
-                  <ListItemText primary={e.name} sx={{ opacity: open ? 1 : 0 }} />
-                </ListItemButton>
-              </ListItem>
-            ))}
+                    <ListItemIcon
+                      sx={{
+                        minWidth: 0,
+                        mr: open ? 3 : 'auto',
+                        justifyContent: 'center',
+                      }}
+                    >
+                      {e.icon}
+                    </ListItemIcon>
+                    <ListItemText primary={e.name} sx={{ opacity: open ? 1 : 0 }} />
+                  </ListItemButton>
+                </ListItem>
+                )
+              } 
+            
+        })}
         </List>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>

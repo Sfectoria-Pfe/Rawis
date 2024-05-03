@@ -4,39 +4,44 @@ import Liste from '../../components/Liste'
 const columns = [
   { field: 'id', headerName: 'ID', width: 90 },
   {
-    field: 'firstName',
-    headerName: 'First name',
+    field: 'nom',
+    headerName: 'Nom',
     width: 150,
     editable: true,
   },
   {
-    field: 'lastName',
-    headerName: 'Last name',
+    field: 'prénom',
+    headerName: 'Prénom',
     width: 150,
     editable: true,
   },
   {
-    field: 'age',
-    headerName: 'Age',
-    type: 'number',
+    field: 'email',
+    headerName: 'Email',
     width: 110,
     editable: true,
   },
   {
-    field: 'fullName',
-    headerName: 'Full name',
+    field: 'nomcomplet',
+    headerName: 'Nom complet',
     description: 'This column has a value getter and is not sortable.',
     sortable: false,
     width: 160,
-    valueGetter: (value, row) => `${row.firstName || ''} ${row.lastName || ''}`,
+    valueGetter: (value, row) => `${row.nom || ''} ${row.prénom || ''}`,
+  },
+  {
+    field: 'matiere',
+    headerName: 'Matière',
+    width: 110,
+    editable: true,
   },
 ];
 
 const rows = [
-  { id: 1, lastName: 'Yassin', firstName: 'Louhichi', age: 14 },
-  { id: 2, lastName: 'Mariem', firstName: 'saidani', age: 31 },
-  { id: 3, lastName: 'Rania', firstName: 'Elouni', age: 31 },
-  { id: 4, lastName: 'Stark', firstName: 'Arya', age: 11 },
+  { id: 1, nom: 'Yassin', prénom: 'Louhichi',email :'yassin@gmil.com', matiere :'Spring boot' },
+  { id: 2, nom: 'Mariem', prénom: 'saidani',email :'mariem@gmil.com', matiere : 'Angular'},
+  { id: 3, nom: 'Rania', prénom: 'Elouni',email :'rania@gmil.com', matiere:'Full Stack' },
+  { id: 4, nom: 'Stark', prénom: 'Arya',email :'noOne@gmil.com', matiere :'No one' },
 ];
 
 const ListEns = () => {
