@@ -30,9 +30,7 @@ export class AuthService {
   }
 
   async getMyInfo(token:string){
-    console.log(token,'jit ml token');
    const myInfo= await this.jwt.decode(token)
-   console.log(myInfo,'ena ml myinfo');
    return myInfo;
   }
 

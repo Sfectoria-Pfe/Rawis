@@ -6,7 +6,6 @@ import { ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @ApiTags("users")
-
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
@@ -17,16 +16,37 @@ export class UsersController {
     return this.usersService.create(createUserDto);
   }
 
-  @Get()
+  @Get('all')
   @UseGuards(JwtAuthGuard)
   findAll() {
     return this.usersService.findAll();
   }
-
-  @Get(':id')
+  @Get('enseignant')
+  @UseGuards(JwtAuthGuard)
+  findAllEns() {
+    return this.usersService.findAllEns();
+  }
+  @Get('etudiant')
+  @UseGuards(JwtAuthGuard)
+  findAllEtd() {
+    return this.usersService.findAllEtd();
+  }
+  @Get('user/:id')
   @UseGuards(JwtAuthGuard)
   findOne(@Param('id') id: string) {
     return this.usersService.findOne(id);
+  }
+
+  @Get('etudiant/:id')
+  @UseGuards(JwtAuthGuard)
+  findOneEtd(@Param('id') id: string) {
+    return this.usersService.findOneEtd(id);
+  }
+
+  @Get('enseignant/:id')
+  @UseGuards(JwtAuthGuard)
+  findOneEns(@Param('id') id: string) {
+    return this.usersService.findOneEns(id);
   }
 
   @Patch(':id')

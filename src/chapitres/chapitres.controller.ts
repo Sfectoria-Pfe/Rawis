@@ -23,16 +23,16 @@ export class ChapitresController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.chapitresService.findOne(+id);
+    return this.chapitresService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateChapitreDto: UpdateChapitreDto) {
-    return this.chapitresService.update(+id, updateChapitreDto);
+    return this.chapitresService.update(id, updateChapitreDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.chapitresService.remove(+id);
+    return this.chapitresService.remove(id);
   }
 }

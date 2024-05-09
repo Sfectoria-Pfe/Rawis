@@ -1,26 +1,32 @@
 import { Injectable } from '@nestjs/common';
 import { CreateEnseignementDto } from './dto/create-enseignement.dto';
 import { UpdateEnseignementDto } from './dto/update-enseignement.dto';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class EnseignementsService {
+  constructor(private prisma: PrismaService) {}
+
   create(createEnseignementDto: CreateEnseignementDto) {
-    return 'This action adds a new enseignement';
+    return this.prisma.enseignement.create({ data : createEnseignementDto});
   }
 
   findAll() {
-    return `This action returns all enseignements`;
+    return this.prisma.enseignement.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} enseignement`;
+  findOne(id: string) {
+    return this.prisma.enseignement.findUnique({where : {id}});
   }
 
-  update(id: number, updateEnseignementDto: UpdateEnseignementDto) {
-    return `This action updates a #${id} enseignement`;
+  update(id: string, updateEnseignementDto: UpdateEnseignementDto) {
+    return this.prisma.enseignement.update({
+      where: { id },
+      data: updateEnseignementDto,
+    });;;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} enseignement`;
+  remove(id: string) {
+    return this.prisma.enseignement.delete({where : {id}});
   }
 }

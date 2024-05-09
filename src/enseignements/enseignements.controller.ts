@@ -22,16 +22,16 @@ export class EnseignementsController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.enseignementsService.findOne(+id);
+    return this.enseignementsService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateEnseignementDto: UpdateEnseignementDto) {
-    return this.enseignementsService.update(+id, updateEnseignementDto);
+    return this.enseignementsService.update(id, updateEnseignementDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.enseignementsService.remove(+id);
+    return this.enseignementsService.remove(id);
   }
 }

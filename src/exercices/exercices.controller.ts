@@ -22,16 +22,16 @@ export class ExercicesController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.exercicesService.findOne(+id);
+    return this.exercicesService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateExerciceDto: UpdateExerciceDto) {
-    return this.exercicesService.update(+id, updateExerciceDto);
+    return this.exercicesService.update(id, updateExerciceDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.exercicesService.remove(+id);
+    return this.exercicesService.remove(id);
   }
 }

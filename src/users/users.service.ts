@@ -18,8 +18,24 @@ export class UsersService {
     return await this.prisma.user.findMany();
   }
 
+  async findAllEns() {
+    return await this.prisma.user.findMany({where : {role : 'Enseignant'}});
+  }
+
+  async findAllEtd() {
+    return await this.prisma.user.findMany({where : {role : 'Etudiant'}});
+  }
+
  async findOne(id: string) {
     return await this.prisma.user.findUnique({ where: { id } });
+  }
+
+  findOneEns(id: string) {
+    return this.prisma.user.findUnique({where : {id,role : "Enseignant"}, include: {Enseignement: {include:{Cours : true}}} });
+  }
+
+  findOneEtd(id: string) {
+    return this.prisma.user.findUnique({where : {id,role :"Etudiant"}, include: {Inscrire: {include:{Cours : true}}} });
   }
 
   update(id: string, updateUserDto: UpdateUserDto) {

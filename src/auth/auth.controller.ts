@@ -23,7 +23,6 @@ export class AuthController {
   @UseGuards(JwtAuthGuard)
   @Get('me')
   async findMe(@Request() req) {
-    console.log(req.user, 'ahla');
     return await this.authService.getMyInfo(
       req.get('Authorization').replace('Bearer ', '')
     );// token with out bearer and space // type mtaa token howa bearer

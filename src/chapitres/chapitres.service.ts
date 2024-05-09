@@ -1,26 +1,32 @@
 import { Injectable } from '@nestjs/common';
 import { CreateChapitreDto } from './dto/create-chapitre.dto';
 import { UpdateChapitreDto } from './dto/update-chapitre.dto';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class ChapitresService {
-  create(createChapitreDto: CreateChapitreDto) {
-    return 'This action adds a new chapitre';
+  constructor(private prisma: PrismaService) {}
+
+  create(dto: CreateChapitreDto) {
+    return this.prisma.chapitre.create({ data : dto });
   }
 
   findAll() {
-    return `This action returns all chapitres`;
+    return this.prisma.chapitre.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} chapitre`;
+  findOne(id: string) {
+    return this.prisma.chapitre.findUnique({where :{id}});
   }
 
-  update(id: number, updateChapitreDto: UpdateChapitreDto) {
-    return `This action updates a #${id} chapitre`;
+  update(id: string, updateChapitreDto: UpdateChapitreDto) {
+    return this.prisma.chapitre.update({
+      where: { id },
+      data: updateChapitreDto,
+    });;;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} chapitre`;
+  remove(id: string) {
+    return this.prisma.chapitre.delete({where : {id}});
   }
 }

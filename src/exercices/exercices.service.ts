@@ -1,26 +1,32 @@
 import { Injectable } from '@nestjs/common';
 import { CreateExerciceDto } from './dto/create-exercice.dto';
 import { UpdateExerciceDto } from './dto/update-exercice.dto';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class ExercicesService {
-  create(createExerciceDto: CreateExerciceDto) {
-    return 'This action adds a new exercice';
+  constructor(private prisma: PrismaService) {}
+
+  create(dto: CreateExerciceDto) {
+    return this.prisma.exercice.create({ data : dto });
   }
 
   findAll() {
-    return `This action returns all exercices`;
+    return this.prisma.exercice.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} exercice`;
+  findOne(id: string) {
+    return this.prisma.exercice.findUnique({where : {id}});
   }
 
-  update(id: number, updateExerciceDto: UpdateExerciceDto) {
-    return `This action updates a #${id} exercice`;
+  update(id: string, updateExerciceDto: UpdateExerciceDto) {
+    return this.prisma.exercice.update({
+      where: { id },
+      data: updateExerciceDto,
+    })
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} exercice`;
+  remove(id: string) {
+    return this.prisma.exercice.delete({where :{id}});
   }
 }
