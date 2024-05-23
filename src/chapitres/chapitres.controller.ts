@@ -16,9 +16,14 @@ export class ChapitresController {
     return this.chapitresService.create(createChapitreDto);
   }
 
+  @Get("/allChapitres/:id")
+  findAll(@Param('id') id: string) {
+    return this.chapitresService.findAll(id);
+  }
+
   @Get()
-  findAll() {
-    return this.chapitresService.findAll();
+  findAllChaptires(){
+    return this.chapitresService.findAllChaptires();
   }
 
   @Get(':id')

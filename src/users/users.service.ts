@@ -3,15 +3,60 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import * as bcrypt from 'bcrypt';
+import { MailService } from 'src/mail/mail.service';
 
 @Injectable()
 export class UsersService {
-  constructor(private prisma: PrismaService) { }
-  async create(dto: CreateUserDto) {
-    const { password, ...rest } = dto
-    const salt = await bcrypt.genSalt()
-    const hashpassword = await bcrypt.hash(password, salt)
-    return await this.prisma.user.create({ data: { password: hashpassword, ...rest } });
+  constructor(private prisma: PrismaService,
+    private readonly nodeMailerService: MailService,
+  ) { }
+  // async create(dto: CreateUserDto) {
+  //   const { password, ...rest } = dto
+  //   const salt = await bcrypt.genSalt()
+  //   const hashpassword = await bcrypt.hash(password, salt)
+  //   return await this.prisma.user.create({ data: { password: hashpassword, ...rest } });
+  // }
+
+  async createEns(dto: CreateUserDto) {
+    console.log('hello')
+    const { email, ...rest } = dto;
+    let code = '';
+    for (let i = 0; i < 8; i++) {
+      code += Math.floor(Math.random() * 9);
+    }
+    const salt = await bcrypt.genSalt();
+    const hachedPassword = await bcrypt.hash(code, salt);
+    const user = await this.prisma.user.create({
+      data: {
+        ...rest,
+            email,
+            password: hachedPassword,
+            role : 'Enseignant'
+      },
+    });
+    console.log(user)
+    await this.nodeMailerService.mailForgotPassword(email, code);
+    return 'User created';
+  }
+
+  async createEtd(dto: CreateUserDto) {
+    const { email, ...rest } = dto;
+    let code = '';
+    for (let i = 0; i < 8; i++) {
+      code += Math.floor(Math.random() * 9);
+    }
+    const salt = await bcrypt.genSalt();
+    const hachedPassword = await bcrypt.hash(code, salt);
+    await this.prisma.user.create({
+      data: {
+        ...rest,
+            email,
+            password: hachedPassword,
+            role : 'Etudiant'
+      },
+    });
+    await this.nodeMailerService.mailForgotPassword(email, code);
+    return 'User created';
   }
 
  async findAll() {

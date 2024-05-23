@@ -11,10 +11,16 @@ export class ChapitresService {
     return this.prisma.chapitre.create({ data : dto });
   }
 
-  findAll() {
+  findAll(id:string) {
+    return this.prisma.chapitre.findMany({
+      where : {
+        coursId : id
+      }
+    });
+  }
+async  findAllChaptires() {
     return this.prisma.chapitre.findMany();
   }
-
   findOne(id: string) {
     return this.prisma.chapitre.findUnique({where :{id}});
   }

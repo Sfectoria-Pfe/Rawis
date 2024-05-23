@@ -22,16 +22,16 @@ export class ReponsesQController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.reponsesQService.findOne(+id);
+    return this.reponsesQService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateReponsesQDto: UpdateReponsesQDto) {
-    return this.reponsesQService.update(+id, updateReponsesQDto);
+    return this.reponsesQService.update(id, updateReponsesQDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.reponsesQService.remove(+id);
+    return this.reponsesQService.remove(id);
   }
 }

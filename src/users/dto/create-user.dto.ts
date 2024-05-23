@@ -6,25 +6,34 @@ export class CreateUserDto {
     @ApiProperty()
     @IsNotEmpty()
     @IsString()
-    nom     : string
+    nom: string
     @ApiProperty()
     @IsNotEmpty()
     @IsString()
-    prenom :  string
+    prenom: string
     @ApiProperty()
     @IsEmail()
-    email   : string
+    email: string
     @ApiProperty()
-    @IsNotEmpty()
-    @IsString()
-    @MinLength(6)
+
     password: string
     @ApiProperty()
-    @IsNotEmpty()
-    @IsString()
-    phone   : string
+
+    phone: string
     @ApiProperty()
-    @IsNotEmpty()
-    role : Role 
+
+    role: Role
 }
+export class forgetPassDto {
+    @ApiProperty()
+    @IsEmail()
+    email: string
+    @ApiProperty()
+
+    code: string
+   
+   
+
+}
+
 

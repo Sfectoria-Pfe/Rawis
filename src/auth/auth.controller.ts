@@ -4,6 +4,8 @@ import { CreateAuthDto } from './dto/create-auth.dto';
 import { UpdateAuthDto } from './dto/update-auth.dto';
 import { ApiSecurity, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from './jwt-auth.guard';
+import { forgetPassDto } from 'src/users/dto/create-user.dto';
+import { UpdateUserDto } from 'src/users/dto/update-user.dto';
 
 @Controller('auth')
 @ApiTags('auth')
@@ -28,14 +30,31 @@ export class AuthController {
     );// token with out bearer and space // type mtaa token howa bearer
   }
 
+  @Post('/forgetPassword')
+  forgotPassword(@Body() dto: forgetPassDto) {
+    const { email } = dto;
+    return this.authService.forgotPassword(email);
+  }
+  @Post('/forgetPassword/verificationCode')
+  verificationCode(@Body() dto: forgetPassDto) {
+    const {  code,email } = dto;
+    return this.authService.verificationCode(code, email);
+  }
+  
+//   @Post('/change-password')
+//   changePassword(@Body() dto: ChangePassword) {
+//     const { email, password, confirmPassword } = dto;
+//     return this.authService.changePassword(email, password, confirmPassword);
+//   }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.authService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAuthDto: UpdateAuthDto) {
-    return this.authService.update(+id, updateAuthDto);
+  updateMe(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+    return this.authService.updateMe(updateUserDto,id);
   }
 
   @Delete(':id')

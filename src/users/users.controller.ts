@@ -10,10 +10,22 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @Post()
-  @UseGuards(JwtAuthGuard)
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.create(createUserDto);
+  // @Post()
+  // @UseGuards(JwtAuthGuard)
+  // create(@Body() createUserDto: CreateUserDto) {
+  //   return this.usersService.create(createUserDto);
+  // }
+
+  @Post('enseignant')
+  //@UseGuards(JwtAuthGuard)
+  createEns(@Body() createUserDto: CreateUserDto) {
+    return this.usersService.createEns(createUserDto);
+  }
+
+  @Post('etudiant')
+  //@UseGuards(JwtAuthGuard)
+  createEtd(@Body() createUserDto: CreateUserDto) {
+    return this.usersService.createEtd(createUserDto);
   }
 
   @Get('all')

@@ -22,16 +22,16 @@ export class PropsQcmController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.propsQcmService.findOne(+id);
+    return this.propsQcmService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updatePropsQcmDto: UpdatePropsQcmDto) {
-    return this.propsQcmService.update(+id, updatePropsQcmDto);
+    return this.propsQcmService.update(id, updatePropsQcmDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.propsQcmService.remove(+id);
+    return this.propsQcmService.remove(id);
   }
 }

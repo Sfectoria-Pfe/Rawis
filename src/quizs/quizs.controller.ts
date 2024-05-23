@@ -8,30 +8,30 @@ import { ApiTags } from '@nestjs/swagger';
 
 @Controller('quizs')
 export class QuizsController {
-  constructor(private readonly quizsService: QuizsService) {}
+  constructor(private readonly quizsService: QuizsService) { }
 
   @Post()
-  create(@Body() createQuizDto: CreateQuizDto) {
-    return this.quizsService.create(createQuizDto);
+  create(@Body() createQuizDto: any) {
+    return this.quizsService.create(createQuizDto?.questions);
   }
 
-  @Get()
-  findAll() {
-    return this.quizsService.findAll();
+  @Get(":idChapitre")
+  findAll( @Param('idChapitre') idChapitre: string) {
+    return this.quizsService.findAll(idChapitre);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.quizsService.findOne(+id);
-  }
+  // @Get(':id')
+  // findOne(@Param('id') id: string) {
+  //   return this.quizsService.findOne(id);
+  // }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateQuizDto: UpdateQuizDto) {
-    return this.quizsService.update(+id, updateQuizDto);
+    return this.quizsService.update(id, updateQuizDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.quizsService.remove(+id);
+    return this.quizsService.remove(id);
   }
 }
