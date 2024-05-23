@@ -1,11 +1,18 @@
 import React from 'react'
-import NavBarHome from '../components/navBar/NavBarHome';
+import TopNavbar from '../component/Nav/TopNavbar';
+import Header from '../component/Sections/Header';
+import Services from '../component/Sections/Services'
+import Contact from '../component/Sections/Contact';
+import Footer from '../component/Sections/Footer';
 
 const HomePage = () => {
   return (
     <div>
-        <NavBarHome />
-      
+        <TopNavbar/>
+        <Header />
+        <Services />
+        <Contact />
+        <Footer />
     </div>
   )
 }

@@ -1,0 +1,29 @@
+/* ForgetPass.css */
+.forget-pass-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .card-custom {
+    width: 60%; /* Ajustez la largeur de la carte */
+    max-width: 800px; /* Limitez la largeur maximale */
+    margin: 0 20px; /* Ajouter des marges entre les images et la carte */
+  }
+  
+  .image-wrapper {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .side-image {
+    width: 600px; /* Ajustez la largeur des images */
+    max-width: 400px; /* Limitez la largeur maximale des images */
+    height: auto; /* Assurez-vous que les images gardent leur ratio d'aspect */
+  }
+  
+  .card-image {
+    width: 100%; /* Assurez-vous que l'image de la carte occupe tout l'espace disponible */
+    height: auto; /* Assurez-vous que l'image garde son ratio d'aspect */
+  }

@@ -1,9 +1,8 @@
 import React, { createContext, useEffect, useState } from 'react'
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Login from "../pages/auth/Login";
-import Registre from "../pages/auth/Registre";
+import Login from "../pages/auth/Login"; 
 import HomePage from "../pages/HomePage";
-import Contact from "../pages/Contact";
+import Contact from "../component/Sections/Contact"
 import Main from '../apps/Main';
 import Client from '../apps/Client';
 import ForgetPass from '../pages/auth/ForgetPass';
@@ -20,13 +19,23 @@ import ListEns from '../pages/enseignants/ListEns';
 import CoursDetail from '../pages/cours/CoursDetail';
 import axios from 'axios';
 import PrivateRoute from './PrivateRoute';
+import EnsDetail from '../pages/enseignants/EnsDetail';
+import EtdDetail from '../pages/etudiants/EtdDetail';
+import AddChapitre from '../pages/chapitre/AddChapitre';
+import ListeChap from '../pages/chapitre/ListeChap';
+import Chapitre from '../pages/chapitre/chapitre';
+import CreateQcm from '../pages/test/CreateQcm';
+import Profil from '../pages/profil/Profil';
+import Reponse from '../pages/test/Reponse';
+import EditProfil from '../pages/profil/EditProfil';
+import Code from '../pages/auth/Code';
 
 
-export const MyContext = createContext ('')
+export const MyContext = createContext('')
 
 const Router = () => {
     const [user, setUser] = useState();
-    const [update,setUpdate]=useState(false)
+    const [update, setUpdate] = useState(false)
 
     const getMe = async () => {
         try {
@@ -46,42 +55,54 @@ const Router = () => {
         getMe();
     }, [update])
 
-  
+
 
     return (
         <div>
             <BrowserRouter>
-            <MyContext.Provider value= {user} >
-                <Routes>
-                    {user ? (
-                        <Route path="/" element={<Main />} >
-                            <Route Index element={<Dashboard />} />
-                            <Route path="/Cours" element={<Cours />} >
+                <MyContext.Provider value={user} >
+                    <Routes>
+                        {user ? (
+                            <Route path="/" element={<Main />} >
+                                <Route Index element={<Dashboard />} />
+                                <Route path="/Cours" element={<Cours />} >
+                                    <Route index element={<ListCours />} />
+                                    <Route path="addCours" element={<PrivateRoute component={<AddCours />} roles={['Enseignant']} />} />
+                                    <Route path=":id" element={<CoursDetail />} />
+                                    <Route path=':id/addChapitre' element={<PrivateRoute component={<AddChapitre />} roles={['Enseignant']} />} />
+                                    <Route path=':id/listChap' element={<ListeChap />} />
+                                    <Route path=':id/:idChapitre' element={<Chapitre />} />
+                                    <Route path=':id/:idChapitre/createQcm' element={<PrivateRoute component={<CreateQcm />} roles={['Enseignant']} />} />
+                                    <Route path=':id/:idChapitre/reponse' element={<Reponse />} />
+                                </Route>
 
-                                <Route index element={<ListCours />} />
-                                <Route path="addCours" element={<AddCours />} />
-                                <Route path="coursDetail/:id" element={<CoursDetail />} />
+                                <Route path="/etudiant" element={<PrivateRoute component={<Etudiant />} roles={['Admin', 'Enseignant']} />} >
+                                    <Route index element={<ListEtd />} />
+                                    <Route path="addEtudiant" element={<AddEtd />} />
+                                    <Route path=":id" element={<EtdDetail />} />
+                                </Route>
+
+
+                                <Route path="/enseignant" element={<Enseignant />} >
+                                    <Route index element={<PrivateRoute component={<ListEns />} roles={['Admin']} />} />
+                                    <Route path="addEnseignant" element={<AddEns />} />
+                                    <Route path=":id" element={<EnsDetail />} />
+                                </Route>
+                                <Route path='/profil' element={<Profil />} />
+                                <Route path='/editProfil' element={<EditProfil setUpdate={setUpdate} update={update} />} />
+
 
                             </Route>
-
-                            <Route path="addEtusiant" element={<AddEtd />} />
-                            <Route path="/etudiant" element={<Etudiant />} />
-                            <Route path="/listEtudiant" element={<ListEtd />} />
-                            <Route path="/addEnseignant" element={<AddEns />} />
-                            <Route path="/enseignant" element={<Enseignant />} />
-                            <Route path="/listEnseignant" element={<PrivateRoute component={<ListEns/>} roles ={['Admin']}/>} />
-
-                        </Route>
-                    ) : (<Route path="/" element={<Client />} >
-                        <Route Index element={<HomePage />} />
-                        <Route path="/login" element={<Login setUpdate={setUpdate} update={update}/>} />
-                        <Route path="/registre" element={<Registre />} />
-                        <Route path='/contact' element={<Contact />} />
-                        <Route path="/forgetPass" element={<ForgetPass />} />
-                    </Route>)}
+                        ) : (<Route path="/" element={<Client />} >
+                            <Route index element={<HomePage />} />
+                            <Route path="/login" element={<Login setUpdate={setUpdate} update={update} />} />
+                            <Route path='/contact' element={<Contact />} />
+                            <Route path="/forgetPass" element={<ForgetPass />} />
+                            <Route path="/code" element={<Code  setUpdate={setUpdate} update={update}/>}/>
+                        </Route>)}
 
 
-                </Routes>
+                    </Routes>
                 </MyContext.Provider>
             </BrowserRouter>
         </div>

@@ -12,7 +12,8 @@ import { useNavigate } from 'react-router-dom';
 const AddCours = () => {
   const [validated, setValidated] = useState(false);
   const [cours, setCours] = useState({
-    title: ''
+    title: '',
+    description: ''
   })
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -21,7 +22,6 @@ const AddCours = () => {
       [name]: value
     })
   }
-  console.log(cours, "cours");
   const navigate = useNavigate()
 
   const handleSubmit = async (event) => {
@@ -36,8 +36,6 @@ const AddCours = () => {
      await axios.post("http://localhost:4000/cours", cours)
       navigate(-1)
     }
-
-
     setValidated(true);
   };
   return (

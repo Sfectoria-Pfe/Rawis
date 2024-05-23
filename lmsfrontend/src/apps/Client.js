@@ -1,11 +1,12 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
-import NavBarHome from '../components/navBar/NavBarHome'
+import HomePage from '../pages/HomePage'
+
 
 const Client = () => {
   return (
     <div>
-      <NavBarHome/>
+     
       <Outlet/>
     </div>
   )

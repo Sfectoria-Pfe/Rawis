@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Liste from '../../components/Liste';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -6,12 +6,16 @@ import { GridActionsCellItem } from '@mui/x-data-grid';
 import DeleteIcon from '@mui/icons-material/Delete';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import Delete from '../../components/Delete';
+import { MyContext } from '../../router/Router'
+import CoursGrid from '../../components/CoursGrid';
 
 const ListCours = () => {
 
+  const user = useContext(MyContext)
   const [selectId, setSelectId] = useState('');
   const [update, setUpdate] = useState(false);
   const [open, setOpen] = useState(false);
+
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -60,7 +64,7 @@ const ListCours = () => {
           />,
           <GridActionsCellItem 
           icon={<RemoveRedEyeIcon/>}
-          onClick={()=>navigate(`coursDetail/${params.row.id}`)}
+          onClick={()=>navigate(`${params.row.id}`)}
           />
         ],
       },
@@ -81,14 +85,19 @@ const ListCours = () => {
   useEffect(() => {
     fetchCours()
   }
-   , [update])//kol matetbadel update awed useEffect / depeendecy array
+   ,[update])//kol matetbadel update awed useEffect / depeendecy array
   return (
     <div>
       <Delete open={open} handleClose={handleClose} handleDelete={handleDelete} />
-      <div className='d-flex justify-content-end py-3'>
+     {(user.role == "Enseignant") 
+      && <div className='d-flex justify-content-end py-3'>
         <button className='btn btn-primary' onClick={()=>navigate("addCours")}>Ajouter cours</button>
-      </div>
-      <Liste columns={columns} rows={rows} />
+      </div>}
+      {(user.role === 'Enseignant' || user.role === 'Admin') ? (
+        <Liste columns={columns} rows={rows} />
+      ) : (
+        <CoursGrid rows={rows} />
+      )}
     </div>
   )
 }

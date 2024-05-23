@@ -23,10 +23,10 @@ import { useNavigate, Outlet } from 'react-router-dom';
 import { MDBContainer, MDBNavbar, MDBBtn, MDBInputGroup } from 'mdb-react-ui-kit';
 import { Avatar, Menu, MenuItem, Tooltip } from '@mui/material';
 import { MyContext } from '../router/Router';
+import { Link } from 'react-router-dom';
+import LogoIcon from "../assets/svg/Logo";
 
 const drawerWidth = 240;
-
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const openedMixin = (theme) => ({
   width: drawerWidth,
@@ -95,12 +95,15 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 const Main = () => {
 
+  const handelLogOut = () => {
+    localStorage.removeItem("token");
+    window.location.href = "/"
+  };
+
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const user = React.useContext(MyContext)
-  console.log(user , 'user from main')
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
@@ -123,9 +126,16 @@ const Main = () => {
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open}>
-        <Toolbar>
-          <IconButton
+      <AppBar style={{ backgroundColor: 'white' }} position="fixed" open={open}>
+     
+        <Toolbar className='justify-content-between'>
+        <Link className="pointer flexNullCenter" to="/" smooth={true}>
+            <LogoIcon />
+            <h1 style={{ marginLeft: "15px" }} className="font20 extraBold">
+              Elite
+            </h1>
+          </Link>
+          { (user.role == "Admin" || user.role == "Enseignant") && <IconButton
             color="inherit"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
@@ -136,7 +146,7 @@ const Main = () => {
             }}
           >
             <TfiMenuAlt />
-          </IconButton>
+          </IconButton>}
           <Typography variant="h6" noWrap component="div">
             <MDBNavbar>
               <MDBContainer fluid>
@@ -150,7 +160,7 @@ const Main = () => {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="../img/lms" />
+                <Avatar alt="Remy Sharp" src={user?.imgUrl} />
               </IconButton>
             </Tooltip>
             <Menu
@@ -169,16 +179,16 @@ const Main = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+              {[{ name: 'Profil', to: '/profil' }, { name: 'Se déconnecter', onClick: handelLogOut }].map((e) => (
+                <MenuItem key={e.name} onClick={e.onClick || handleCloseUserMenu}>
+                  {e.to ? <Link to={e.to}><Typography textAlign="center">{e.name}</Typography></Link> : <Typography textAlign="center">{e.name}</Typography>}
                 </MenuItem>
               ))}
             </Menu>
           </Box>
         </Toolbar>
       </AppBar>
-      <Drawer variant="permanent" open={open}>
+      { (user.role=='Enseignant' || user.role=='Admin') && <Drawer variant="permanent" open={open} >
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
@@ -187,38 +197,38 @@ const Main = () => {
         <Divider />
         <List>
           {[
-            { name: 'Dashboard', path: '/', icon: <MdDashboard /> , roles: ['Admin','Enseignant'] },
-            { name: 'Enseignants', path: '/listEnseignant', icon: <FaUserGroup />, roles:['Admin'] },
-            { name: 'Etudiants', path: '/listEtudiant', icon: <HiUserGroup />, roles: ['Admin','Enseignant']  },
-            { name: 'Cours', path: '/cours', icon: <MdViewModule />,  roles: ['Admin','Enseignant','Etudiant'] }].map((e, index) => {
+            { name: 'Dashboard', path: '/', icon: <MdDashboard />, roles: ['Admin', 'Enseignant'] },
+            { name: 'Enseignants', path: '/enseignant', icon: <FaUserGroup />, roles: ['Admin'] },
+            { name: 'Etudiants', path: '/etudiant', icon: <HiUserGroup />, roles: ['Admin', 'Enseignant'] },
+            { name: 'Cours', path: '/cours', icon: <MdViewModule />, roles: ['Admin', 'Enseignant', 'Etudiant'] }].map((e, index) => {
               if (e.roles.includes(user.role)) {
                 return (
                   <ListItem key={e.name} disablePadding sx={{ display: 'block' }}>
-                  <ListItemButton onClick={() => navigate(e.path)}
-                    sx={{
-                      minHeight: 48,
-                      justifyContent: open ? 'initial' : 'center',
-                      px: 2.5,
-                    }}
-                  >
-                    <ListItemIcon
+                    <ListItemButton onClick={() => navigate(e.path)}
                       sx={{
-                        minWidth: 0,
-                        mr: open ? 3 : 'auto',
-                        justifyContent: 'center',
+                        minHeight: 48,
+                        justifyContent: open ? 'initial' : 'center',
+                        px: 2.5,
                       }}
                     >
-                      {e.icon}
-                    </ListItemIcon>
-                    <ListItemText primary={e.name} sx={{ opacity: open ? 1 : 0 }} />
-                  </ListItemButton>
-                </ListItem>
+                      <ListItemIcon
+                        sx={{
+                          minWidth: 0,
+                          mr: open ? 3 : 'auto',
+                          justifyContent: 'center',
+                        }}
+                      >
+                        {e.icon}
+                      </ListItemIcon>
+                      <ListItemText primary={e.name} sx={{ opacity: open ? 1 : 0 }} />
+                    </ListItemButton>
+                  </ListItem>
                 )
-              } 
-            
-        })}
+              }
+
+            })}
         </List>
-      </Drawer>
+      </Drawer>}
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
         <Outlet />
