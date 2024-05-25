@@ -18,12 +18,12 @@ export class PropsQcmService {
     return this.prisma.propQcm.findUnique({where : {id}});
   }
 
-  update(id: string, updatePropsQcmDto: UpdatePropsQcmDto) {
-    return this.prisma.cours.update({
-      where: { id },
-      data: updatePropsQcmDto,
-    });
-  }
+  // update(id: string, updatePropsQcmDto: UpdatePropsQcmDto) {
+  //   return this.prisma.cours.update({
+  //     where: { id },
+  //     data: updatePropsQcmDto,
+  //   });
+  // }
 
   remove(id: string) {
     return this.prisma.propQcm.delete({where : { id }});

@@ -25,10 +25,10 @@ export class PropsQcmController {
     return this.propsQcmService.findOne(id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePropsQcmDto: UpdatePropsQcmDto) {
-    return this.propsQcmService.update(id, updatePropsQcmDto);
-  }
+  // @Patch(':id')
+  // update(@Param('id') id: string, @Body() updatePropsQcmDto: UpdatePropsQcmDto) {
+  //   return this.propsQcmService.update(id, updatePropsQcmDto);
+  // }
 
   @Delete(':id')
   remove(@Param('id') id: string) {

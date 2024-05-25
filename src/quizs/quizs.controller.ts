@@ -25,10 +25,10 @@ export class QuizsController {
   //   return this.quizsService.findOne(id);
   // }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateQuizDto: UpdateQuizDto) {
-    return this.quizsService.update(id, updateQuizDto);
-  }
+  // @Patch(':id')
+  // update(@Param('id') id: string, @Body() updateQuizDto: UpdateQuizDto) {
+  //   return this.quizsService.update(id, updateQuizDto);
+  // }
 
   @Delete(':id')
   remove(@Param('id') id: string) {

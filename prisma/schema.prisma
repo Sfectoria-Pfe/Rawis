@@ -50,15 +50,23 @@ model Score {
 }
 
 model Cours {
-  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
   title       String
   description String
+  semestre    Semestre @default(Semestre1)
 
   //Relations 
   Chapitre     Chapitre[]
   Enseignement Enseignement[]
   Exercice     Exercice[]
   Inscrire     Inscrire[]
+  Field        Field          @relation(fields: [fieldId], references: [id])
+  fieldId      String         @db.ObjectId
+}
+
+enum Semestre {
+  Semestre1
+  Semestre2
 }
 
 model Chapitre {
@@ -163,4 +171,13 @@ model Contact {
   email       String
   sujet       String
   description String
+}
+
+model Field {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  title String
+  imgUrl String
+  description String
+  Cours Cours[]
 }

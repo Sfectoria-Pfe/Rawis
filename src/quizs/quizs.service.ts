@@ -38,12 +38,12 @@ export class QuizsService {
   //   return this.prisma.quiz.findUnique({ where: { id } });
   // }
 
-  update(id: string, updateQuizDto: UpdateQuizDto) {
-    return this.prisma.cours.update({
-      where: { id },
-      data: updateQuizDto,
-    });
-  }
+  // update(id: string, updateQuizDto: UpdateQuizDto) {
+  //   return this.prisma.cours.update({
+  //     where: { id },
+  //     data: updateQuizDto,
+  //   });
+  // }
 
   remove(id: string) {
     return this.prisma.quiz.delete({ where: { id } });

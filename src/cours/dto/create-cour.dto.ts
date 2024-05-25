@@ -1,4 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
+import { Semestre } from "@prisma/client";
 import { IsNotEmpty, IsString } from "class-validator";
 
 export class CreateCourDto {
@@ -10,4 +11,7 @@ export class CreateCourDto {
     @IsString()
     @IsNotEmpty()
     description : string 
+    fieldId : string
+    semestre : Semestre
+
 }

@@ -12,7 +12,7 @@ export class CoursService {
   }
 
   async findAll() {
-    return await this.prisma.cours.findMany(); 
+    return await this.prisma.cours.findMany({include:{Field:true}}); 
   }
 
   findOne(id: string) {

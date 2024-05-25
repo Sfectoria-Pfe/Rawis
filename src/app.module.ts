@@ -17,9 +17,10 @@ import { PrismaService } from './prisma/prisma.service';
 import { PrismaModule } from './prisma/prisma.module';
 import { AuthModule } from './auth/auth.module';
 import { InscriresModule } from './inscrires/inscrires.module';
+import { FieldsModule } from './fields/fields.module';
 
 @Module({
-  imports: [UsersModule, CoursModule, ScoresModule, VersionsModule, ChapitresModule, QuizsModule, ReponsesQModule, PropsQcmModule, EnseignementsModule, ReponsesExrModule, ExercicesModule, ContactsModule, PrismaModule, AuthModule, InscriresModule],
+  imports: [UsersModule, CoursModule, ScoresModule, VersionsModule, ChapitresModule, QuizsModule, ReponsesQModule, PropsQcmModule, EnseignementsModule, ReponsesExrModule, ExercicesModule, ContactsModule, PrismaModule, AuthModule, InscriresModule, FieldsModule],
   controllers: [AppController],
   providers: [AppService, PrismaService],
 })
