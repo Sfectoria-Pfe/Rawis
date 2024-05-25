@@ -14,7 +14,7 @@ import AddEtd from '../pages/etudiants/AddEtd';
 import AddEns from '../pages/enseignants/AddEns';
 import Enseignant from '../pages/enseignants/Enseignant';
 import Etudiant from '../pages/etudiants/Etudiant';
-import Dashboard from '../pages/Dashboard';
+import Dashboard from '../pages/dashboard/index';
 import ListEns from '../pages/enseignants/ListEns';
 import CoursDetail from '../pages/cours/CoursDetail';
 import axios from 'axios';
@@ -29,6 +29,9 @@ import Profil from '../pages/profil/Profil';
 import Reponse from '../pages/test/Reponse';
 import EditProfil from '../pages/profil/EditProfil';
 import Code from '../pages/auth/Code';
+import Feild from '../pages/Feild';
+import Semester from '../pages/Semester';
+import Services from '../component/Sections/Services';
 
 
 export const MyContext = createContext('')
@@ -64,7 +67,9 @@ const Router = () => {
                     <Routes>
                         {user ? (
                             <Route path="/" element={<Main />} >
-                                <Route Index element={<Dashboard />} />
+                                <Route index element={<Feild />} />
+                                    <Route path="dashboard" element={<PrivateRoute component={<Dashboard />} roles={['Admin', 'Enseignant', 'Etudiant']} />} />
+                                    <Route path="semester" element={<Semester/>}/>
                                 <Route path="/Cours" element={<Cours />} >
                                     <Route index element={<ListCours />} />
                                     <Route path="addCours" element={<PrivateRoute component={<AddCours />} roles={['Enseignant']} />} />
@@ -98,6 +103,7 @@ const Router = () => {
                             <Route path="/login" element={<Login setUpdate={setUpdate} update={update} />} />
                             <Route path='/contact' element={<Contact />} />
                             <Route path="/forgetPass" element={<ForgetPass />} />
+                            <Route path="services" element={<Services />} />
                             <Route path="/code" element={<Code  setUpdate={setUpdate} update={update}/>}/>
                         </Route>)}
 

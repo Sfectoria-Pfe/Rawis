@@ -15,6 +15,8 @@ import img from '../../img/login.avif'
 import styled from 'styled-components';
 import FullButton from "../../component/Buttons/FullButton";
 import LogoIcon from "../../assets/svg/Logo";
+import { toast } from 'react-toastify';
+
 
 const Login = ({ setUpdate, update }) => {
   const [email, setEmail] = useState('');
@@ -28,6 +30,7 @@ const Login = ({ setUpdate, update }) => {
       navigate("/")
       return res.data
     } catch (err) {
+      toast.error("Error")
       console.log(err);
     }
   }
@@ -61,7 +64,7 @@ const Login = ({ setUpdate, update }) => {
               <MDBInput wrapperClass='mb-4' label='Mot de passe' id='form2' type='password' onChange={(e) => setPassword(e.target.value)} />
 
               <div className="d-flex justify-content-between mx-4 mb-4" >
-                <MDBCheckbox name='flexCheck' value='' id='flexCheckDefault' label='Remember me' />
+                <MDBCheckbox name='flexCheck' value='' id='flexCheckDefault' label='Rappelez-moi' />
                 <a href="forgetPass">Mot de passe oublié ?</a>
               </div>
 

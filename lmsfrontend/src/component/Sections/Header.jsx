@@ -6,8 +6,12 @@ import FullButton from "../Buttons/FullButton";
 import HeaderImage from "../../assets/img/homepage.png";
 import QuotesIcon from "../../assets/svg/Quotes";
 import Dots from "../../assets/svg/Dots";
+import { useNavigate } from "react-router-dom";
 
 export default function Header() {
+ 
+  const navigate = useNavigate()
+
   return (
     <Wrapper id="home" className="container flexSpaceCenter">
       <LeftSide className="flexCenter">
@@ -15,8 +19,8 @@ export default function Header() {
           <h1 className="extraBold font60">Nous sommes élites.</h1>
           <HeaderP className="font13 semiBold">
           Bienvenue sur notre plateforme éducative ! Explorez nos cours interactifs et testez vos connaissances avec nos QCM pour un apprentissage efficace.          </HeaderP>
-          <BtnWrapper >
-            <FullButton title="Get Started" />
+          <BtnWrapper onClick={() => navigate('/') }  >
+            <FullButton title="Redémarrer" />
           </BtnWrapper>
         </div>
       </LeftSide>
@@ -29,9 +33,9 @@ export default function Header() {
             </QuotesWrapper>
             <div>
               <p className="font15 whiteColor">
-                <em>Friends, such as we desire, are dreams and fables. Friendship demands the ability to do without it.</em>
+                <em>L'éducation est ce qui reste après qu'on ait oublié ce qu'on a appris à l'école.</em>
               </p>
-              <p className="font13 orangeColor textRight" style={{marginTop: '10px'}}>Ralph Waldo Emerson</p>
+            <p className="font13 orangeColor textRight" style={{marginTop: '10px'}}>Albert Einstein</p>
             </div>
           </QuoteWrapper>
           <DotsWrapper>

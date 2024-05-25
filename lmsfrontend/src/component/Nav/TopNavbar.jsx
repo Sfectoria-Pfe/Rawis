@@ -38,7 +38,7 @@ export default function TopNavbar() {
           <UlWrapper className="flexNullCenter">
             <li className="semiBold font15 pointer">
               <Link activeClass="active" style={{ padding: "10px 15px" }} to="home" spy={true} smooth={true} offset={-80}>
-                Home
+                Acceuil
               </Link>
             </li>
             <li className="semiBold font15 pointer">
@@ -65,12 +65,12 @@ export default function TopNavbar() {
           <UlWrapperRight className="flexNullCenter">
             <li className="semiBold font15 pointer">
               <a href="/login" style={{ padding: "10px 30px 10px 0" }}>
-                Log in
+                Se connecter
               </a>
             </li>
             <li className="semiBold font15 pointer flexCenter">
               <a href="/" className="radius8 lightBg" style={{ padding: "10px 15px" }}>
-                Get Started
+              Redémarrer
               </a>
             </li>
           </UlWrapperRight>

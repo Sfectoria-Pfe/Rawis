@@ -57,8 +57,10 @@ const AddEtd = () => {
     //alert
   };
   console.log(userEtd, "userEtd");
-
+  
   return (
+    <div className='d-flex justify-content-center align-items-center' style={{ height: '80vh' }}>
+
     <Card style={{ width : "30rem"}}>
     <Form className='justify-content-center m-5'>
       <Form.Group className="mb-3">
@@ -90,6 +92,7 @@ const AddEtd = () => {
       </BtnWrapper>
     </Form>
     </Card>
+          </div>
   )
 }
 

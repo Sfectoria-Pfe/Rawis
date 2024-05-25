@@ -19,7 +19,7 @@ import { TfiMenuAlt } from "react-icons/tfi";
 import { MdDashboard, MdViewModule } from "react-icons/md";
 import { HiUserGroup } from "react-icons/hi2";
 import { FaUserGroup } from "react-icons/fa6";
-import { useNavigate, Outlet } from 'react-router-dom';
+import { useNavigate, Outlet, useLocation } from 'react-router-dom';
 import { MDBContainer, MDBNavbar, MDBBtn, MDBInputGroup } from 'mdb-react-ui-kit';
 import { Avatar, Menu, MenuItem, Tooltip } from '@mui/material';
 import { MyContext } from '../router/Router';
@@ -122,21 +122,16 @@ const Main = () => {
   };
 
   const navigate = useNavigate()
-
+  const location = useLocation()
+  console.log(location.pathname, "location");
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
       <AppBar style={{ backgroundColor: 'white' }} position="fixed" open={open}>
-     
+
         <Toolbar className='justify-content-between'>
-        <Link className="pointer flexNullCenter" to="/" smooth={true}>
-            <LogoIcon />
-            <h1 style={{ marginLeft: "15px" }} className="font20 extraBold">
-              Elite
-            </h1>
-          </Link>
-          { (user.role == "Admin" || user.role == "Enseignant") && <IconButton
-            color="inherit"
+        {user.role !== 'Etudiant' && (location.pathname !== '/' && location.pathname !== '/semester') && <IconButton
+            // color="inherit"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
@@ -147,7 +142,13 @@ const Main = () => {
           >
             <TfiMenuAlt />
           </IconButton>}
-          <Typography variant="h6" noWrap component="div">
+          <Link className="pointer flexNullCenter" to="/" smooth={true}>
+            <LogoIcon />
+            <h1 style={{ marginLeft: "15px" }} className="font20 extraBold">
+              Elite
+            </h1>
+          </Link>
+          {/* <Typography variant="h6" noWrap component="div">
             <MDBNavbar>
               <MDBContainer fluid>
                 <MDBInputGroup tag="form" className='d-flex w-auto mb-3'>
@@ -156,7 +157,7 @@ const Main = () => {
                 </MDBInputGroup>
               </MDBContainer>
             </MDBNavbar>
-          </Typography>
+          </Typography> */}
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
@@ -188,47 +189,48 @@ const Main = () => {
           </Box>
         </Toolbar>
       </AppBar>
-      { (user.role=='Enseignant' || user.role=='Admin') && <Drawer variant="permanent" open={open} >
-        <DrawerHeader>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-          </IconButton>
-        </DrawerHeader>
-        <Divider />
-        <List>
-          {[
-            { name: 'Dashboard', path: '/', icon: <MdDashboard />, roles: ['Admin', 'Enseignant'] },
-            { name: 'Enseignants', path: '/enseignant', icon: <FaUserGroup />, roles: ['Admin'] },
-            { name: 'Etudiants', path: '/etudiant', icon: <HiUserGroup />, roles: ['Admin', 'Enseignant'] },
-            { name: 'Cours', path: '/cours', icon: <MdViewModule />, roles: ['Admin', 'Enseignant', 'Etudiant'] }].map((e, index) => {
-              if (e.roles.includes(user.role)) {
-                return (
-                  <ListItem key={e.name} disablePadding sx={{ display: 'block' }}>
-                    <ListItemButton onClick={() => navigate(e.path)}
-                      sx={{
-                        minHeight: 48,
-                        justifyContent: open ? 'initial' : 'center',
-                        px: 2.5,
-                      }}
-                    >
-                      <ListItemIcon
+      {user.role !== 'Etudiant' && (location.pathname !== '/' && location.pathname !== '/semester') &&
+        <Drawer variant="permanent" open={open}>
+          <DrawerHeader>
+            <IconButton onClick={handleDrawerClose}>
+              {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+            </IconButton>
+          </DrawerHeader>
+          <Divider />
+          <List>
+            {[
+              { name: 'Dashboard', path: 'dashboard', icon: <MdDashboard />, roles: ['Admin', 'Enseignant'] },
+              { name: 'Enseignants', path: '/enseignant', icon: <FaUserGroup />, roles: ['Admin'] },
+              { name: 'Etudiants', path: '/etudiant', icon: <HiUserGroup />, roles: ['Admin', 'Enseignant'] },
+              { name: 'Cours', path: '/cours', icon: <MdViewModule />, roles: ['Admin', 'Enseignant', 'Etudiant'] }].map((e, index) => {
+                if (e.roles.includes(user.role)) {
+                  return (
+                    <ListItem key={e.name} disablePadding sx={{ display: 'block' }}>
+                      <ListItemButton onClick={() => navigate(e.path)}
                         sx={{
-                          minWidth: 0,
-                          mr: open ? 3 : 'auto',
-                          justifyContent: 'center',
+                          minHeight: 48,
+                          justifyContent: open ? 'initial' : 'center',
+                          px: 2.5,
                         }}
                       >
-                        {e.icon}
-                      </ListItemIcon>
-                      <ListItemText primary={e.name} sx={{ opacity: open ? 1 : 0 }} />
-                    </ListItemButton>
-                  </ListItem>
-                )
-              }
+                        <ListItemIcon
+                          sx={{
+                            minWidth: 0,
+                            mr: open ? 3 : 'auto',
+                            justifyContent: 'center',
+                          }}
+                        >
+                          {e.icon}
+                        </ListItemIcon>
+                        <ListItemText primary={e.name} sx={{ opacity: open ? 1 : 0 }} />
+                      </ListItemButton>
+                    </ListItem>
+                  )
+                }
 
-            })}
-        </List>
-      </Drawer>}
+              })}
+          </List>
+        </Drawer>}
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
         <Outlet />

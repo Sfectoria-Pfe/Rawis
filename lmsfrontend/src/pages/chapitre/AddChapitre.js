@@ -5,6 +5,9 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { useNavigate, useParams } from 'react-router-dom';
+import { Card } from 'react-bootstrap';
+import styled from 'styled-components';
+import FullButton from '../../component/Buttons/FullButton';
 
 
 const AddChapitre = () => {
@@ -14,7 +17,7 @@ const AddChapitre = () => {
   const { id } = useParams()
   const [chapitre, SetChapitre] = useState({
     title: '',
-    description :'', 
+    description: '',
     link: '',
     coursId: id
   })
@@ -62,45 +65,57 @@ const AddChapitre = () => {
   };
 
   return (
-    <div>
-      <Form noValidate validated={validated} onSubmit={handleSubmit}>
-        <Row className="mb-3 d-flex">
-          <Form.Group md="4" controlId="validationCustom01">
-            <Form.Label>Titre</Form.Label>
-            <Form.Control
-              required
-              type="text"
-              placeholder="Titre"
-              onChange={handleChange}
-              name='title'
-            />
-            <Form.Label>Description</Form.Label>
-            <Form.Control
-              required
-              type="text"
-              placeholder="Description"
-              onChange={handleChange}
-              name='description'
-            />
-            <Form.Label>Lien</Form.Label>
-            <Form.Control
-              required
-              type="file"
-              placeholder="lien"
-              onChange={handleFileChange}
-              name='link'
-            />
-            <Form.Control.Feedback>Trés bien</Form.Control.Feedback>
-          </Form.Group>
+    <div className='d-flex justify-content-center align-items-center' style={{ height: '80vh' }}>
+      <Card style={{ width: '30rem' }}>
 
-          {previewPdf && <iframe src={previewPdf} height={300} className='mt-5'></iframe>}
-        </Row>
+        <Form className='justify-content-center m-5' noValidate validated={validated} onSubmit={handleSubmit}>
+          <Row className="mb-3">
+            <Form.Group md="4" controlId="validationCustom01">
+              <Form.Label>Titre</Form.Label>
+              <Form.Control
+                required
+                type="text"
+                placeholder="Titre"
+                onChange={handleChange}
+                name='title'
+              />
+              <Form.Label>Description</Form.Label>
+              <Form.Control
+                required
+                type="text"
+                placeholder="Description"
+                onChange={handleChange}
+                name='description'
+              />
+              <Form.Label>Lien</Form.Label>
+              <Form.Control
+                required
+                type="file"
+                placeholder="lien"
+                onChange={handleFileChange}
+                name='link'
+              />
+              <Form.Control.Feedback>Trés bien</Form.Control.Feedback>
+            </Form.Group>
 
-        <Button type="submit">Ajouter</Button>
-      </Form>
+            {previewPdf && <iframe src={previewPdf} height={300} className='mt-5'></iframe>}
+          </Row>
+
+          <BtnWrapper type="submit">
+          <FullButton title="Ajouter" />
+        </BtnWrapper>
+        </Form>
+      </Card>
     </div>
 
   )
 }
 
 export default AddChapitre
+
+const BtnWrapper = styled.div`
+  max-width: 190px;
+  @media (max-width: 960px) {
+    margin: 0 auto;
+  }
+`;

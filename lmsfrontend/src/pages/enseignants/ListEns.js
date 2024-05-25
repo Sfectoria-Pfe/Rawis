@@ -59,14 +59,6 @@ const ListEns = () => {
       editable: true,
     },
     {
-      field: 'nomcomplet',
-      headerName: 'Nom complet',
-      description: 'This column has a value getter and is not sortable.',
-      sortable: false,
-      width: 160,
-      valueGetter: (value, row) => `${row.nom || ''} ${row.prénom || ''}`,
-    },
-    {
       field: 'matiere',
       headerName: 'Matière',
       width: 110,

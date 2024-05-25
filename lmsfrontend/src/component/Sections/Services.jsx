@@ -16,39 +16,37 @@ export default function Services() {
         <div className="container">
           <HeaderInfo>
             <h1 className="font40 extraBold">Nos services</h1>
-            <p className="font13">
-              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
-              <br />
-              labore et dolore magna aliquyam erat, sed diam voluptua.
+            <p className="font20">
+            Notre plateforme offre les services professionnels suivants :
             </p>
           </HeaderInfo>
           <ServiceBoxRow className="flex">
             <ServiceBoxWrapper>
               <ServiceBox
                 icon="roller"
-                title="React js"
-                subtitle="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua."
+                title="Licence Informatique"
+                subtitle="La Licence en Informatique forme aux bases de la programmation, du développement logiciel, des bases de données, des réseaux et de la sécurité informatique, incluant projets pratiques et stages en entreprise."
               />
             </ServiceBoxWrapper>
             <ServiceBoxWrapper>
               <ServiceBox
                 icon="monitor"
-                title="Nest js"
-                subtitle="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore."
+                title="Mastère recherche"
+                subtitle="Le Mastère de Recherche forme aux compétences avancées en méthodologie scientifique et en conduite de projets de recherche, incluant des travaux pratiques et des stages, préparant à une carrière académique ou en R&D."
               />
             </ServiceBoxWrapper>
             <ServiceBoxWrapper>
               <ServiceBox
                 icon="browser"
-                title="Mongo"
-                subtitle="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat."
+                title="Mastère professionnel"
+                subtitle="Le Mastère Professionnel forme aux compétences avancées et spécialisées, incluant projets pratiques et stages, préparant aux rôles de leadership dans l'industrie."
               />
             </ServiceBoxWrapper>
             <ServiceBoxWrapper>
               <ServiceBox 
               icon="printer" 
-              title="Prisma" 
-              subtitle="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor." />
+              title="Ingéneire informatique" 
+              subtitle="Le programme d'Ingénierie Informatique forme aux compétences en développement logiciel, systèmes embarqués, réseaux et sécurité." />
             </ServiceBoxWrapper>
           </ServiceBoxRow>
         </div>

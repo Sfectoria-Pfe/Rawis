@@ -65,14 +65,6 @@ const ListEtd = () => {
       editable: true,
     },
     {
-      field: 'fullName',
-      headerName: 'Nom complet',
-      description: 'This column has a value getter and is not sortable.',
-      sortable: false,
-      width: 160,
-      valueGetter: (value, row) => `${row.firstName || ''} ${row.lastName || ''}`,
-    },
-    {
       field: 'Action',
       headerName: 'Action',
       type: 'actions',
