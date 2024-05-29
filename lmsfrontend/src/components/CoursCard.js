@@ -13,7 +13,7 @@ console.log(row,"this is row")
             <CardMedia
                 component="img"
                 height="140"
-                image={img}
+                image={row?.imgUrl}
             />
             <CardContent>
                 <Typography gutterBottom variant="h5" component="div">

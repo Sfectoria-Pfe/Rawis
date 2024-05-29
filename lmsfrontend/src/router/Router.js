@@ -1,8 +1,7 @@
 import React, { createContext, useEffect, useState } from 'react'
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Login from "../pages/auth/Login"; 
+import Login from "../pages/auth/Login";
 import HomePage from "../pages/HomePage";
-import Contact from "../component/Sections/Contact"
 import Main from '../apps/Main';
 import Client from '../apps/Client';
 import ForgetPass from '../pages/auth/ForgetPass';
@@ -32,6 +31,7 @@ import Code from '../pages/auth/Code';
 import Feild from '../pages/Feild';
 import Semester from '../pages/Semester';
 import Services from '../component/Sections/Services';
+import Contact from '../pages/Contact';
 
 
 export const MyContext = createContext('')
@@ -68,9 +68,10 @@ const Router = () => {
                         {user ? (
                             <Route path="/" element={<Main />} >
                                 <Route index element={<Feild />} />
-                                    <Route path="dashboard" element={<PrivateRoute component={<Dashboard />} roles={['Admin', 'Enseignant', 'Etudiant']} />} />
-                                    <Route path="semester" element={<Semester/>}/>
-                                <Route path="/Cours" element={<Cours />} >
+                                <Route path="dashboard" element={<PrivateRoute component={<Dashboard />} roles={['Admin', 'Enseignant', 'Etudiant']} />} />
+                                <Route path=":feildId" element={<Semester />} />
+
+                                <Route path=":feildId/:title/cours" element={<Cours />} >
                                     <Route index element={<ListCours />} />
                                     <Route path="addCours" element={<PrivateRoute component={<AddCours />} roles={['Enseignant']} />} />
                                     <Route path=":id" element={<CoursDetail />} />
@@ -79,24 +80,26 @@ const Router = () => {
                                     <Route path=':id/:idChapitre' element={<Chapitre />} />
                                     <Route path=':id/:idChapitre/createQcm' element={<PrivateRoute component={<CreateQcm />} roles={['Enseignant']} />} />
                                     <Route path=':id/:idChapitre/reponse' element={<Reponse />} />
+                                    {/* </Route> */}
                                 </Route>
 
-                                <Route path="/etudiant" element={<PrivateRoute component={<Etudiant />} roles={['Admin', 'Enseignant']} />} >
+
+                                <Route path="etudiant" element={<PrivateRoute component={<Etudiant />} roles={['Admin', 'Enseignant']} />} >
                                     <Route index element={<ListEtd />} />
                                     <Route path="addEtudiant" element={<AddEtd />} />
                                     <Route path=":id" element={<EtdDetail />} />
                                 </Route>
 
+                                <Route path="contact" element={<PrivateRoute component={<Contact />} roles={['Admin']} />}/>
 
-                                <Route path="/enseignant" element={<Enseignant />} >
+
+                                <Route path="enseignant" element={<Enseignant />} >
                                     <Route index element={<PrivateRoute component={<ListEns />} roles={['Admin']} />} />
                                     <Route path="addEnseignant" element={<AddEns />} />
                                     <Route path=":id" element={<EnsDetail />} />
                                 </Route>
-                                <Route path='/profil' element={<Profil />} />
-                                <Route path='/editProfil' element={<EditProfil setUpdate={setUpdate} update={update} />} />
-
-
+                                <Route path='profil' element={<Profil />} />
+                                <Route path='editProfil' element={<EditProfil setUpdate={setUpdate} update={update} />} />
                             </Route>
                         ) : (<Route path="/" element={<Client />} >
                             <Route index element={<HomePage />} />
@@ -104,7 +107,7 @@ const Router = () => {
                             <Route path='/contact' element={<Contact />} />
                             <Route path="/forgetPass" element={<ForgetPass />} />
                             <Route path="services" element={<Services />} />
-                            <Route path="/code" element={<Code  setUpdate={setUpdate} update={update}/>}/>
+                            <Route path="/code" element={<Code setUpdate={setUpdate} update={update} />} />
                         </Route>)}
 
 

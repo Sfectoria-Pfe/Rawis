@@ -24,58 +24,66 @@ const EtdDetail = () => {
   }, [])
 
   return (
-    <MDBCard className="mb-4">
+    <div className='d-flex  justify-content-center align-items-center ' style={{ height: "80vh",width:"800" }}>
+
+    <MDBCard className="mb-4 w-75">
       <MDBCardBody>
         <MDBRow>
-          <MDBCol sm="3">
+          <MDBCol sm="3" className='d-flex justify-content-center align-items-center'>
             <MDBCardImage src={user.imgUrl} alt="User Image" />
           </MDBCol>
-          <hr />
-          <MDBCol sm="3">
-            <MDBCardText>Nom</MDBCardText>
-          </MDBCol>
           <MDBCol sm="9">
-            <MDBCardText className="text-muted">{user.nom}</MDBCardText>
-          </MDBCol>
-        </MDBRow>
-        <hr />
-        <MDBRow>
-          <MDBCol sm="3">
-            <MDBCardText>Prénom</MDBCardText>
-          </MDBCol>
-          <MDBCol sm="9">
-            <MDBCardText className="text-muted">{user.prenom}</MDBCardText>
-          </MDBCol>
-        </MDBRow>
-        <hr />
-        <MDBRow>
-          <MDBCol sm="3">
-            <MDBCardText>Email</MDBCardText>
-          </MDBCol>
-          <MDBCol sm="9">
-            <MDBCardText className="text-muted">{user.email}</MDBCardText>
-          </MDBCol>
-        </MDBRow>
-        <hr />
-        <MDBRow>
-          <MDBCol sm="3">
-            <MDBCardText>Téléphone</MDBCardText>
-          </MDBCol>
-          <MDBCol sm="9">
-            <MDBCardText className="text-muted"> {user.phone} </MDBCardText>
-          </MDBCol>
-        </MDBRow>
-        <hr />
-        <MDBRow>
-          <MDBCol sm="3">
-            <MDBCardText>Role</MDBCardText>
-          </MDBCol>
-          <MDBCol sm="9">
-            <MDBCardText className="text-muted">{user.role}</MDBCardText>
+
+            <MDBRow>
+
+              <MDBCol sm="3">
+                <MDBCardText>Nom</MDBCardText>
+              </MDBCol>
+              <MDBCol sm="5">
+                <MDBCardText className="text-muted">{user.nom}</MDBCardText>
+              </MDBCol>
+            </MDBRow>
+            <hr />
+            <MDBRow>
+              <MDBCol sm="3">
+                <MDBCardText>Prénom</MDBCardText>
+              </MDBCol>
+              <MDBCol sm="9">
+                <MDBCardText className="text-muted">{user.prenom}</MDBCardText>
+              </MDBCol>
+            </MDBRow>
+            <hr />
+            <MDBRow>
+              <MDBCol sm="3">
+                <MDBCardText>Email</MDBCardText>
+              </MDBCol>
+              <MDBCol sm="9">
+                <MDBCardText className="text-muted">{user.email}</MDBCardText>
+              </MDBCol>
+            </MDBRow>
+            <hr />
+            <MDBRow>
+              <MDBCol sm="3">
+                <MDBCardText>Téléphone</MDBCardText>
+              </MDBCol>
+              <MDBCol sm="9">
+                <MDBCardText className="text-muted"> {user.phone} </MDBCardText>
+              </MDBCol>
+            </MDBRow>
+            <hr />
+            <MDBRow>
+              <MDBCol sm="3">
+                <MDBCardText>Role</MDBCardText>
+              </MDBCol>
+              <MDBCol sm="9">
+                <MDBCardText className="text-muted">{user.role}</MDBCardText>
+              </MDBCol>
+            </MDBRow>
           </MDBCol>
         </MDBRow>
       </MDBCardBody>
     </MDBCard>
+    </div>
   )
 }
 

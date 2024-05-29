@@ -17,14 +17,15 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { TfiMenuAlt } from "react-icons/tfi";
 import { MdDashboard, MdViewModule } from "react-icons/md";
-import { HiUserGroup } from "react-icons/hi2";
 import { FaUserGroup } from "react-icons/fa6";
-import { useNavigate, Outlet, useLocation } from 'react-router-dom';
-import { MDBContainer, MDBNavbar, MDBBtn, MDBInputGroup } from 'mdb-react-ui-kit';
+import { useNavigate, Outlet, useLocation, useParams } from 'react-router-dom';
 import { Avatar, Menu, MenuItem, Tooltip } from '@mui/material';
 import { MyContext } from '../router/Router';
 import { Link } from 'react-router-dom';
 import LogoIcon from "../assets/svg/Logo";
+import { MdMessage } from "react-icons/md";
+import { PiStudentFill } from "react-icons/pi";
+import { GiTeacher } from "react-icons/gi";
 
 const drawerWidth = 240;
 
@@ -120,7 +121,7 @@ const Main = () => {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-
+const {feildId, title}=useParams()
   const navigate = useNavigate()
   const location = useLocation()
   console.log(location.pathname, "location");
@@ -130,7 +131,7 @@ const Main = () => {
       <AppBar style={{ backgroundColor: 'white' }} position="fixed" open={open}>
 
         <Toolbar className='justify-content-between'>
-        {user.role !== 'Etudiant' && (location.pathname !== '/' && location.pathname !== '/semester') && <IconButton
+        {user.role !== 'Etudiant' && (location.pathname !== '/' && location.pathname !== `/${feildId}`) && <IconButton
             // color="inherit"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
@@ -189,7 +190,7 @@ const Main = () => {
           </Box>
         </Toolbar>
       </AppBar>
-      {user.role !== 'Etudiant' && (location.pathname !== '/' && location.pathname !== '/semester') &&
+      {user.role !== 'Etudiant' && (location.pathname !== '/' && location.pathname !== `/${feildId}`) &&
         <Drawer variant="permanent" open={open}>
           <DrawerHeader>
             <IconButton onClick={handleDrawerClose}>
@@ -200,9 +201,10 @@ const Main = () => {
           <List>
             {[
               { name: 'Dashboard', path: 'dashboard', icon: <MdDashboard />, roles: ['Admin', 'Enseignant'] },
-              { name: 'Enseignants', path: '/enseignant', icon: <FaUserGroup />, roles: ['Admin'] },
-              { name: 'Etudiants', path: '/etudiant', icon: <HiUserGroup />, roles: ['Admin', 'Enseignant'] },
-              { name: 'Cours', path: '/cours', icon: <MdViewModule />, roles: ['Admin', 'Enseignant', 'Etudiant'] }].map((e, index) => {
+              { name: 'Enseignants', path: 'enseignant', icon: <GiTeacher />, roles: ['Admin'] },
+              { name: 'Etudiants', path:`etudiant`, icon: <PiStudentFill />, roles: ['Admin', 'Enseignant'] },
+              { name: 'Cours', path: `${feildId}/${title}/cours`, icon: <MdViewModule />, roles: ['Admin', 'Enseignant', 'Etudiant'] },
+              { name: 'Contacts', path: 'contact', icon: <MdMessage />, roles: ['Admin'] },].map((e, index) => {
                 if (e.roles.includes(user.role)) {
                   return (
                     <ListItem key={e.name} disablePadding sx={{ display: 'block' }}>

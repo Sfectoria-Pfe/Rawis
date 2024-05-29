@@ -28,16 +28,16 @@ const Contact = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault()
-    const form = event.currentTarget;//bech tepionti ala ll form 
-    if (form.checkValidity() === false) {
-      event.preventDefault();//bech mayrefrechich ll page
-      event.stopPropagation();// bech may2atherch aala les balises lokhrin 
-      setValidated(true) // ydhahharli les feedback
-    } else {
+
+    try {
+
+
       await axios.post("http://localhost:4000/contacts", contact)
-    }
-    setValidated(true);
-    navigate('/')
+
+
+      navigate('/')
+    } catch (error) { }
+
   }
 
 
@@ -53,18 +53,20 @@ const Contact = () => {
           </HeaderInfo>
           <div className="row" style={{ paddingBottom: "30px" }}>
             <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-              <Form noValidate validated={validated} >
+              <Form  onSubmit={handleSubmit} >
                 <label className="font13">Nom:</label>
-                <input type="text" id="fname" name="name" className="font20 extraBold" onChange={handleChange} />
+                <input type="text" id="fname" name="name" required className="font20 extraBold" onChange={handleChange} />
                 <label className="font13">Email:</label>
-                <input type="text" id="email" name="email" className="font20 extraBold" onChange={handleChange} />
+                <input type="text" id="email" name="email" required className="font20 extraBold" onChange={handleChange} />
                 <label className="font13">Sujet:</label>
-                <input type="text" id="subject" name="sujet" className="font20 extraBold" onChange={handleChange} />
-                <textarea rows="4" cols="50" type="text" id="message" name="description" className="font20 extraBold" onChange={handleChange} />
+                <input type="text" id="subject" name="sujet" required className="font20 extraBold" onChange={handleChange} />
+                <label className="font13">Message:</label>
+                <textarea rows="4" cols="50" type="text" id="message" name="description" required className="font20 extraBold" onChange={handleChange} />
+
+              <div   className="d-flex">
+              <button type="submit" className="btn  pointer animate   text-white" style={{background:"#580cd2",width:"30%"}}>Envoyer</button>
+              </div>
               </Form>
-              <SumbitWrapper className="flex">
-                <ButtonInput type="submit" value="Envoyer" className="pointer animate radius8" style={{ maxWidth: "220px" }} onClick={handleSubmit} />
-              </SumbitWrapper>
             </div>
             <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 flex">
               <div style={{ width: "50%" }} className="flexNullCenter flexColumn">

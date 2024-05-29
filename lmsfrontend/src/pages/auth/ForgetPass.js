@@ -11,7 +11,7 @@ import img from '../../img/fp.avif'
 import styled from 'styled-components';
 import FullButton from "../../component/Buttons/FullButton";
 import LogoIcon from "../../assets/svg/Logo";
-import nsit3 from "../../img/nsit3.png";
+import nsit from "../../img/nsit.webp";
 
 import './forgetPass.css';
 
@@ -21,11 +21,8 @@ const ForgetPass = () => {
   const navigate = useNavigate()
   return (
     <div className="forget-pass-container">
-      <div className='image-wrapper' >
-        <img src={nsit3} alt="phone" className="side-image" />
-      </div>
 
-      <MDBContainer className='d-flex justify-content-center align-items-center '>
+      <MDBContainer className='d-flex justify-content-center align-items-center ' style={{ height: '90vh' }} >
 
         <MDBCard className='text-black m-5 card-custom' style={{ width: '40rem' }}>
 
@@ -67,6 +64,7 @@ const ForgetPass = () => {
         </MDBCard>
 
       </MDBContainer>
+      <SideImage src={nsit} alt="phone" />
     </div>
   )
 }
@@ -78,4 +76,11 @@ const BtnWrapper = styled.div`
   @media (max-width: 960px) {
     margin: 0 auto;
   }
+`;
+const SideImage = styled.img`
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 320px; // Ajustez la taille selon vos besoins
+  height: auto; // Ajustez la hauteur si nécessaire
 `;

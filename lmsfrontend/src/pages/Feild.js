@@ -42,7 +42,7 @@ const navigate = useNavigate()
             </CardContent>
           </CardActionArea>
           <CardActions>
-            <Button size="small" color="primary" onClick={() => navigate("semester",{state:{field}})}>
+            <Button size="small" color="primary" onClick={() => navigate(`${field?.id}`)}>
               Consulter
             </Button>
           </CardActions>

@@ -83,9 +83,6 @@ const CreateQcm = () => {
   return (
     <div className='d-flex justify-content-center align-items-center' style={{ height: '60vh' }}>
       <Card style={{ width: '60rem' }}>
-        <BtnWrapper className="d-flex justify-content-end">
-          <FullButton title="Générer" />
-        </BtnWrapper>
         <Container className="max-w-md mx-auto space-y-6">
           {questions?.questions?.map((question, questionIndex) => (
             <Form className='justify-content-center m-5' key={questionIndex}>

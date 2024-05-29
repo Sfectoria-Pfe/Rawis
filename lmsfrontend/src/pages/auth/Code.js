@@ -11,8 +11,6 @@ import img from '../../img/fp.avif'
 import styled from 'styled-components';
 import FullButton from "../../component/Buttons/FullButton";
 import LogoIcon from "../../assets/svg/Logo";
-import nsit2 from "../../img/nsit2.png";
-import nsit3 from "../../img/nsit3.png";
 
 import './forgetPass.css';
 
@@ -27,11 +25,11 @@ console.log(result.state.email,"email");
   const navigate = useNavigate()
   return (
     <div className="forget-pass-container">
-      <div className='image-wrapper' >
+      {/* <div className='image-wrapper' >
         <img src={nsit3} alt="phone" className="side-image" />
-      </div>
+      </div> */}
 
-      <MDBContainer className='my-5 justify-content-center'>
+      <MDBContainer className='d-flex justify-content-center align-items-center ' style={{ height: '90vh' }}>
 
         <MDBCard className='text-black m-5 card-custom' style={{ width: '40rem' }}>
 
@@ -78,9 +76,9 @@ console.log(result.state.email,"email");
         </MDBCard>
 
       </MDBContainer>
-      <div className='image-wrapper'>
+      {/* <div className='image-wrapper'>
         <img src={nsit2} alt="phone" className="side-image" />
-      </div>
+      </div> */}
     </div>
   )
 }

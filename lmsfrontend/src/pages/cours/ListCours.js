@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import Liste from '../../components/Liste';
 import axios from 'axios';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { GridActionsCellItem } from '@mui/x-data-grid';
 import DeleteIcon from '@mui/icons-material/Delete';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
@@ -12,10 +12,7 @@ import styled from 'styled-components';
 import FullButton from '../../component/Buttons/FullButton';
 
 const ListCours = () => {
-  const location = useLocation();
-  const { elem, field } = location.state
-  console.log(elem, "elem");
-  console.log(field, "fff");
+ 
   const user = useContext(MyContext)
   const [selectId, setSelectId] = useState('');
   const [update, setUpdate] = useState(false);
@@ -74,15 +71,14 @@ const ListCours = () => {
         />
       ],
     },
-
-
   ];
+  const {feildId,title}=useParams()
 
   const fetchCours = async () => {
     try {
       const resp = await axios.get('http://localhost:4000/cours')
       console.log(resp.data, "resp.data");
-      const filtredCourses = resp.data.filter((cours) => cours?.semestre === elem && cours.Field?.title === field
+      const filtredCourses = resp.data.filter((cours) => cours?.semestre === title && cours.Field?.id=== feildId
       )
       console.log(filtredCourses, "filtredCourses");
       setRows(filtredCourses)

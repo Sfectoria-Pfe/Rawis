@@ -51,7 +51,7 @@ export default function CoursDetail() {
         <p className="text-uppercase" style={{ paddingBottom: "20px", textAlign: "center", fontWeight: "bold", fontSize: "30px" }}>{cours.title}</p>
       </div>
       <div>
-        <p className="text-lowercase">{cours.description}</p>
+        <p className="d-flex justify-content-center">{cours.description}</p>
       </div>
       {(user.role === "Enseignant") && <div className='d-flex justify-content-end py-3'>
         <BtnWrapper onClick={() => navigate("addChapitre")}>
@@ -71,16 +71,12 @@ export default function CoursDetail() {
                 <Typography gutterBottom variant="h5" component="div">
                   {row?.title}
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
+                <Typography  variant="body2" color="text.secondary">
                   {row?.description}
                 </Typography>
               </CardContent>
               <Button size="small" onClick={() => (navigate(`${row?.id}`))}>View</Button>
               <Button size="small" onClick={() => (navigate(`${row?.id}/reponse`))}>QCM</Button>
-              
-              <GreyDiv className="lightBg"><DotsWrapper>
-                <Dots />
-              </DotsWrapper></GreyDiv>
             </Card>
 
           )
