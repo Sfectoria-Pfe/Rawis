@@ -11,7 +11,11 @@ export class CreateCourDto {
     @IsString()
     @IsNotEmpty()
     description : string 
+    @ApiProperty ()
+    imgUrl : string
+    @ApiProperty ()
     fieldId : string
+    @ApiProperty ()
     semestre : Semestre
 
 }

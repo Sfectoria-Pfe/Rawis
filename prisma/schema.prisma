@@ -53,6 +53,7 @@ model Cours {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   title       String
   description String
+  imgUrl      String
   semestre    Semestre @default(Semestre1)
 
   //Relations 
@@ -176,8 +177,8 @@ model Contact {
 model Field {
   id String @id @default(auto()) @map("_id") @db.ObjectId
 
-  title String
-  imgUrl String
+  title       String
+  imgUrl      String
   description String
-  Cours Cours[]
+  Cours       Cours[]
 }

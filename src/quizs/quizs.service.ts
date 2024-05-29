@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateQuizDto } from './dto/create-quiz.dto';
 import { UpdateQuizDto } from './dto/update-quiz.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { Chapitre } from 'src/chapitres/entities/chapitre.entity';
 
 @Injectable()
 export class QuizsService {
@@ -23,12 +24,8 @@ export class QuizsService {
 
       }
     })))
-
-
-
-
-
   }
+
 
   async findAll(idChapitre: string) {
     return await this.prisma.quiz.findMany({where:{chapitreId:idChapitre}, include: { PropQcm: true } });

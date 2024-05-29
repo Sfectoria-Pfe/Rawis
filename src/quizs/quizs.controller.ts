@@ -15,6 +15,11 @@ export class QuizsController {
     return this.quizsService.create(createQuizDto?.questions);
   }
 
+  // @Post()
+  // generer(@Body() createQuizDto: any) {
+  //   return this.quizsService.generer(createQuizDto?.questions);
+  // }
+
   @Get(":idChapitre")
   findAll( @Param('idChapitre') idChapitre: string) {
     return this.quizsService.findAll(idChapitre);
