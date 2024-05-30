@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import { Card } from 'react-bootstrap';
 import Resultats from './Resultats';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import FullButton from '../../component/Buttons/FullButton';
+import { MyContext } from '../../router/Router';
 
 const ReponseWindow = styled.div`
     text-align: center;
@@ -85,15 +86,18 @@ const Reponse = () => {
     const [showResults, setShowResults] = useState(false);
     const [userResponses, setUserResponses] = useState([]);
     const [selectedOptions, setSelectedOptions] = useState(Array.from({ length: 4 }, () => false));
+    const [selectedOptionIds, setSelectedOptionIds] = useState([]);
+    const [questionId, setQuestionId] = useState("");
     const { idChapitre } = useParams()
 
-
+    console.log(selectedOptions, "selectedOptions")
+    const user = useContext(MyContext)
 
 
     const fetchQcm = async () => {
         try {
             const resp = await axios.get(`http://localhost:4000/quizs/${idChapitre}`);
-            console.log(resp, "respppppppp");
+
             const quizsData = resp.data;
 
             // Créer une nouvelle structure de questions à partir des données récupérées
@@ -103,6 +107,11 @@ const Reponse = () => {
         }
     };
     console.log(questions, "quizsData");
+    console.log(selectedOptionIds, "selectedOptionIds");
+
+    const reponse = async () => {
+
+    }
 
 
     useEffect(() => {
@@ -110,11 +119,43 @@ const Reponse = () => {
         fetchQcm();
     }, []);
 
-    const handleNextQuestion = () => {
-        setSelectedOptions(Array.from({ length: 4 }, () => false));
-        setNumber(number + 1);
-    };
+    // const handleNextQuestion = async () => {
+    //     try {
+    //         setUserResponses(selectedOptionIds.map((e, i) => {
+    //             return (
+    //                 { userId: user.id, propQcmId: e, quizId: questionId }
+    //             )
+    //         }))
+    //         axios.post('http://localhost:4000/reponses-q/many', userResponses)
+    //         setNumber(number + 1);
+    //     } catch (error) { console.log(error) }
 
+    // };
+    const handleNextQuestion = () => {
+        try {
+            const userResponsesData = selectedOptionIds.map((e, i) => ({
+                userId: user.id,
+                propQcmId: e,
+                quizId: questionId
+            }));
+            setUserResponses(userResponsesData).then(() => {
+                    axios.post('http://localhost:4000/reponses-q/many', userResponsesData)
+                        .then(() => {
+                            setNumber(number + 1);
+                        })
+                        .catch(error => {
+                            console.log(error);
+                        });
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        } catch (error) {
+            console.log(error);
+        }
+    };
+    
+    console.log(userResponses, "userResponses");
     const pickAnswer = (index) => {
         const updatedSelectedOptions = [...selectedOptions];
         updatedSelectedOptions[index] = !updatedSelectedOptions[index];
@@ -131,14 +172,18 @@ const Reponse = () => {
                         <Options>
                             {questions[number]?.PropQcm?.map((item, index) => (
                                 console.log(questions, "item"),
-                                <Option key={index} selected={selectedOptions[index]} onClick={() => pickAnswer(index)}>{item.proposition}</Option>
+                                <Option key={index} onClick={() => {
+                                    // pickAnswer(index)
+                                    setQuestionId(questions[number]?.id)
+                                    setSelectedOptionIds([...selectedOptionIds, item.id])
+                                }}>{item.proposition}</Option>
                             ))}
                         </Options>
-                        {number < questions.length - 1 && 
-                        <div className='d-flex justify-content-center align-items-center m-2' > 
-                        <BtnWrapper onClick={handleNextQuestion}>
-                            <FullButton title="Question suivante" />
-                        </BtnWrapper></div> 
+                        {number < questions.length - 1 &&
+                            <div className='d-flex justify-content-center align-items-center m-2' >
+                                <BtnWrapper onClick={handleNextQuestion}>
+                                    <FullButton title="Question suivante" />
+                                </BtnWrapper></div>
                         }
                     </>
                 }

@@ -126,10 +126,13 @@ const Contact = () => {
         onClose={handleCloseDetail}
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle>{selectedContact?.sujet}</DialogTitle>
+        <DialogTitle>Contact Détaille</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
-         detail
+            <p>Nom : {selectedContact.name}</p>
+            <p>Email : {selectedContact.email}</p>
+            <p>Sujet : {selectedContact.sujet}</p>
+            <p>Description : {selectedContact.description}</p>
           </DialogContentText>
         </DialogContent>
         <DialogActions>
